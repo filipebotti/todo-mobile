@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Dimensions } from 'react-native';
+import { Colors } from './colors';
 
 const { width } = Dimensions.get('window');
 
 const ButtonContainer = styled.TouchableOpacity`
     height: 40;
-    backgroundColor: #673AB7;
+    backgroundColor: ${Colors.PURPLE};
     width: ${width - 90};
     alignItems: center;
     justifyContent: center;
@@ -17,12 +18,12 @@ const ButtonContainer = styled.TouchableOpacity`
 
 const ButtonText = styled.Text`
     fontSize: 15;
-    color: #EDE7F6;
+    color: ${Colors.LIGHT_PURPLE};
 `;
 
-const Button = ({text}) => {
+const Button = ({text, onPress}) => {
     return (
-        <ButtonContainer>
+        <ButtonContainer onPress={onPress}>
             <ButtonText>{text}</ButtonText>
         </ButtonContainer>
     )

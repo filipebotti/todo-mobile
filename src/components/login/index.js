@@ -61,7 +61,11 @@ class Login extends React.Component {
                         onChangeText={(password) => this.setState({password})}
                         value={this.state.password}
                     />
-                    <Button text={"Login"}/>
+                    <Button 
+                        text={"Login"}
+                        onPress={Actions.main}
+                    
+                    />
                 </FormWrapper>
                 <View style={{flex:0.5}}>
                     <TouchableWithoutFeedback onPress={Actions.register}>
