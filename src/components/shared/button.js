@@ -1,10 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 const ButtonContainer = styled.TouchableOpacity`
     height: 40;
     backgroundColor: #673AB7;
-    width: 250;
+    width: ${width - 90};
     alignItems: center;
     justifyContent: center;
     borderRadius: 3;

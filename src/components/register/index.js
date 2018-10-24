@@ -3,7 +3,7 @@ import { TouchableWithoutFeedback, Text, View } from 'react-native';
 import styled from 'styled-components'
 import { Button, Input } from '../shared';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
-import { Actions }  from 'react-native-router-flux';
+import { Actions } from 'react-native-router-flux';
 
 const Container = styled.View`
     flex: 1;
@@ -32,13 +32,13 @@ const HeaderTitle = styled.Text`
     fontWeight: bold;
 `;
 
-class Login extends React.Component {
+class Register extends React.Component {
 
     constructor() {
         super();
 
         this.state = {
-            username: '',
+            name: '',
             password: ''
         }
     }
@@ -46,9 +46,8 @@ class Login extends React.Component {
     render() {
         return (
             <Container>
-                <Header>
-                    <FontAwesome style={{fontSize: 26, color: '#320b86'}}>{Icons.checkSquareO}</FontAwesome>
-                    <HeaderTitle>Tasker</HeaderTitle>
+                <Header>                    
+                    <HeaderTitle>Registre-se</HeaderTitle>
                 </Header>
                 <FormWrapper>
                     <Input 
@@ -57,16 +56,21 @@ class Login extends React.Component {
                         value={this.state.username}
                     />
                     <Input 
+                        placeholder={"Nome"}
+                        onChangeText={(username) => this.setState({username})}
+                        value={this.state.name}
+                    />
+                    <Input 
                         placeholder={"Senha"}
                         onChangeText={(password) => this.setState({password})}
                         value={this.state.password}
                     />
-                    <Button text={"Login"}/>
+                    <Button text={"Registrar"}/>
                 </FormWrapper>
                 <View style={{flex:0.5}}>
-                    <TouchableWithoutFeedback onPress={Actions.register}>
+                    <TouchableWithoutFeedback onPress={Actions.pop}>
                         <View>
-                            <Text style={{color: '#424242'}}>Cadastre-se</Text>
+                            <Text style={{color: '#424242'}}>Cancelar</Text>
                         </View>
                     </TouchableWithoutFeedback>
                 </View>
@@ -75,4 +79,4 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default Register;
