@@ -65,7 +65,9 @@ class Register extends React.Component {
                         onChangeText={(password) => this.setState({password})}
                         value={this.state.password}
                     />
-                    <Button text={"Registrar"}/>
+                    <Button text={"Registrar"}
+                        onPress={Actions.main}
+                    />
                 </FormWrapper>
                 <View style={{flex:0.5}}>
                     <TouchableWithoutFeedback onPress={Actions.pop}>
