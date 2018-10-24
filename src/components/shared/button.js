@@ -21,12 +21,16 @@ const ButtonText = styled.Text`
     color: ${Colors.LIGHT_PURPLE};
 `;
 
-const Button = ({text, onPress}) => {
+const Button = ({text, onPress, disabled, children}) => {
     return (
-        <ButtonContainer onPress={onPress}>
-            <ButtonText>{text}</ButtonText>
+        <ButtonContainer 
+            onPress={onPress}
+            disabled={disabled}
+        >
+            {text && <ButtonText>{text}</ButtonText>}
+            {!text && children}
         </ButtonContainer>
     )
 }
 
-export { Button }
+export { Button, ButtonText }

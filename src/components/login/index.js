@@ -1,9 +1,12 @@
 import React from 'react';
-import { TouchableWithoutFeedback, Text, View } from 'react-native';
+import { TouchableWithoutFeedback, Text, View,ActivityIndicator } from 'react-native';
 import styled from 'styled-components'
-import { Button, Input } from '../shared';
+import { Button, Input, ButtonText } from '../shared';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
 import { Actions }  from 'react-native-router-flux';
+import * as authActions from '../../actions/auth';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 const Container = styled.View`
     flex: 1;
@@ -41,6 +44,29 @@ class Login extends React.Component {
             username: '',
             password: ''
         }
+
+        this.handleLogin = this.handleLogin.bind(this);
+        this.renderLoginButtonChildren = this.renderLoginButtonChildren.bind(this);
+    }
+
+    shouldComponentUpdate(nextProps) {
+        if(!this.props.auth.success && nextProps.auth.success) {            
+            Actions.main();
+            return false;
+        }            
+        else
+            return true;
+    }
+
+    handleLogin() {        
+        this.props.authActions.auth(this.state);
+    }
+
+    renderLoginButtonChildren() {
+        if(!this.props.auth.isAuthenticating)
+            return <ButtonText>Entrar</ButtonText>;
+        else
+            return <ActivityIndicator size="small"/>
     }
 
     render() {
@@ -62,10 +88,11 @@ class Login extends React.Component {
                         value={this.state.password}
                     />
                     <Button 
-                        text={"Login"}
-                        onPress={Actions.main}
-                    
-                    />
+                        onPress={this.handleLogin}
+                        disabled={this.props.auth.isAuthenticating}
+                    >
+                        {this.renderLoginButtonChildren()}
+                    </Button>
                 </FormWrapper>
                 <View style={{flex:0.5}}>
                     <TouchableWithoutFeedback onPress={Actions.register}>
@@ -79,4 +106,11 @@ class Login extends React.Component {
     }
 }
 
-export default Login;
+export default connect(
+    state => ({
+        auth: state.auth
+    }),
+    dispatch => ({
+        authActions: bindActionCreators(authActions, dispatch)
+    })
+)(Login);
