@@ -1,9 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Dimensions } from 'react-native';
+
+const { width } = Dimensions.get('window');
 
 const StyledInput = styled.TextInput`
     height:50;
-    width:250;
+    width:${width- 90};
     marginBottom: 20;
     borderBottomWidth: 1;
     borderBottomColor: #673AB7;
