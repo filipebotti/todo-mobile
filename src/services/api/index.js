@@ -4,7 +4,7 @@ import * as taskCalls from './tasks';
 import * as registerCalls from './register';
 
 export function getConfig(method = 'GET', body) {
-    console.log(USER.token);
+    
     return {
         headers: {
             'Accept': 'application/json',

@@ -15,7 +15,6 @@ export default function(state = initialState, action) {
         case types.TASKS_FETCH_FAIL:
             return { tasks: [], isFetching: false, error: action.error };
         case types.TASK_ADD:
-            console.log("task add reducers");
             newTasks = [ ...state.tasks, action.task ];
             return { ...state, tasks: newTasks }
         case types.TASK_ADD_SUCCESS:

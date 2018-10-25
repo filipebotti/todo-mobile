@@ -67,7 +67,6 @@ class Register extends React.Component {
     }
 
     renderRegisterButtonChildren() {
-        console.log(this.props.user);
         if(!this.props.user.isRegistering)
             return <ButtonText>Entrar</ButtonText>;
         else

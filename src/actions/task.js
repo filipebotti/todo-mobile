@@ -7,7 +7,6 @@ export function fetchTasks() {
 }
 
 export function addTask(task) {
-    console.log("actions add task");
     return {
         type: types.TASK_ADD,
         task

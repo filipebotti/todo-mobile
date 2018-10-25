@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, RefreshControl, AppState } from 'react-native';
 import styled from 'styled-components';
 import { NewTask, Task } from '../shared';
 import uuid from 'uuid/v4';
@@ -23,8 +23,28 @@ class TaskList extends React.Component {
         this.handleNewTask = this.handleNewTask.bind(this);
         this.handleRemoveTask = this.handleRemoveTask.bind(this);
         this.state = {
-            newTaskDescription: ''
+            newTaskDescription: '',
+            appState: AppState.currentState
         }
+
+        this.onRefresh = this.onRefresh.bind(this);
+        this.handleAppState = this.handleAppState.bind(this);
+    }
+
+    componentDidMount() {
+        AppState.addEventListener('change', this.handleAppState);
+      }
+    
+      componentWillUnmount() {
+        AppState.removeEventListener('change', this.handleAppState);
+      }
+
+    handleAppState(nextAppState) {
+        if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+            this.onRefresh();
+        }
+
+        this.setState({appState: nextAppState});
     }
 
     handleNewTask() {
@@ -43,6 +63,10 @@ class TaskList extends React.Component {
         this.props.taskActions.removeTask(task);
     }
 
+    onRefresh() {
+        this.props.taskActions.fetchTasks();
+    }
+
     render() {
         return( 
             <Container>
@@ -52,7 +76,14 @@ class TaskList extends React.Component {
                     onSubmitEditing={this.handleNewTask}
                     textRef={ref => this._taskInput = ref}                      
                 />                    
-                <ScrollView style={{ flex: 1 }}>
+                <ScrollView style={{ flex: 1 }}                    
+                    refreshControl={
+                        <RefreshControl
+                            onRefresh={this.onRefresh}
+                            refreshing={this.props.task.isFetching}
+                        />
+                    }
+                >
                     {this.props.task.tasks.length > 0 && this.props.task.tasks.map((item) => {
                         return (
                             <Task key={item.uuid} task={item} onCheckTask={() => this.handleRemoveTask(item)}/>

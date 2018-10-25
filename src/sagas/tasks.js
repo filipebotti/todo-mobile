@@ -6,8 +6,7 @@ import { Actions } from 'react-native-router-flux';
 function* fetchTasks(action) {
     try {
         const tasks = yield API.fetchTasks();
-        yield put({ type: types.TASKS_FETCH_SUCCESS, tasks })
-        yield put({ type: types.AUTH_SUCCESS, user: action.user });
+        yield put({ type: types.TASKS_FETCH_SUCCESS, tasks })        
     } catch(ex) {
         yield put({type: types.TASKS_FETCH_FAIL, error: ex });
     }
@@ -17,6 +16,7 @@ function* fetchTasksAuth(action) {
     try {
         yield fetchTasks({ user: action.user });
         Actions.main();
+        yield put({ type: types.AUTH_SUCCESS, user: action.user });
     } catch (exc) {
         yield put({ type: types.AUTH_FAIL, error: ex });
     }
