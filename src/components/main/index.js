@@ -3,6 +3,8 @@ import { View } from 'react-native';
 import styled from 'styled-components';
 import { Colors } from '../shared';
 
+import TaskList from '../task-list';
+
 const Container = styled.View`
     flex:1;
 `;
@@ -29,7 +31,7 @@ class Main extends React.Component {
                     <Text>Tasks</Text>
                 </Header>
                 <View style={{flex:1}}>
-
+                    <TaskList/>
                 </View>
             </Container>
         )

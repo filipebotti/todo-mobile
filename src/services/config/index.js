@@ -3,21 +3,19 @@ import { AsyncStorage } from 'react-native';
 let USER = {
     token: '',
     credentials: {},
-    setCredentials: (credentials) => {
+    storeCredentials: (credentials) => {
         AsyncStorage.setItem('credentials', JSON.stringify(credentials))
     },
-    getCredentials: () => {
+    getStoredCredentials: () => {
 
         return AsyncStorage.getItem('credentials')
-        .then(data => {
-            this.credentials = JSON.parse(data);
-        })
+        .then(data => JSON.parse(data))
         .catch(error => console.log(error));
     },
-    setToken: (token) => {
-        AsyncStorage.setItem('token', token);
+    storeToken: (access_token) => {
+        AsyncStorage.setItem('token', access_token);
     },
-    getToken: () => {
+    getStoredToken: () => {
         return AsyncStorage.getItem('token')
         .then(data => {
             this.token = data;
