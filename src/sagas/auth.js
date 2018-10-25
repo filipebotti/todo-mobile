@@ -6,11 +6,10 @@ function* doAuth(action) {
   try{
     const data = yield API.auth(action.payload);
     
-    API.USER.storeToken(data.access_token);
     API.USER.token = data.access_token;
     API.USER.storeCredentials(action.payload);
 
-    yield put({ type: types.AUTH_SUCCESS, user: data.user });
+    yield put({ type: types.INITIAL_FETCH, user: data.user });
   }
   catch(error) {
     yield put({ type: types.AUTH_FAIL, error });

@@ -3,18 +3,19 @@ import * as types from '../actions';
 import API from '../services/api';
 import { Actions } from 'react-native-router-flux';
 
-function* fetchTasks() {
+function* fetchTasks(action) {
     try {
         const tasks = yield API.fetchTasks();
         yield put({ type: types.TASKS_FETCH_SUCCESS, tasks })
+        yield put({ type: types.AUTH_SUCCESS, user: action.user });
     } catch(ex) {
         yield put({type: types.TASKS_FETCH_FAIL, error: ex });
     }
 }
 
-function* fetchTasksAuth() {
+function* fetchTasksAuth(action) {
     try {
-        yield fetchTasks();
+        yield fetchTasks({ user: action.user });
         Actions.main();
     } catch (exc) {
         yield put({ type: types.AUTH_FAIL, error: ex });
@@ -44,7 +45,7 @@ function* removeTask(action) {
 }
 
 export default function* () {
-    yield takeEvery(types.AUTH_SUCCESS, fetchTasksAuth);
+    yield takeEvery(types.INITIAL_FETCH, fetchTasksAuth);
     yield takeEvery(types.TASKS_FETCH, fetchTasks);
     yield takeEvery(types.TASK_ADD, addTask);
     yield takeEvery(types.TASK_REMOVE, removeTask);

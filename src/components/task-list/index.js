@@ -1,10 +1,8 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 import styled from 'styled-components';
-import FontAwesome, { Icons } from 'react-native-fontawesome';
-import { Colors, NewTask, Task } from '../shared';
+import { NewTask, Task } from '../shared';
 import uuid from 'uuid/v4';
-
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

@@ -2,7 +2,6 @@ import { AsyncStorage } from 'react-native';
 
 let USER = {
     token: '',
-    credentials: {},
     storeCredentials: (credentials) => {
         AsyncStorage.setItem('credentials', JSON.stringify(credentials))
     },
@@ -12,15 +11,8 @@ let USER = {
         .then(data => JSON.parse(data))
         .catch(error => console.log(error));
     },
-    storeToken: (access_token) => {
-        AsyncStorage.setItem('token', access_token);
-    },
-    getStoredToken: () => {
-        return AsyncStorage.getItem('token')
-        .then(data => {
-            this.token = data;
-        })
-        .catch(error => console.log(error));
+    clear: () => {
+        AsyncStorage.removeItem('credentials');
     }
 }
 
