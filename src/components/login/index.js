@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableWithoutFeedback, Text, View, ActivityIndicator } from 'react-native';
+import { TouchableWithoutFeedback, Text, View, ActivityIndicator, Alert } from 'react-native';
 import styled from 'styled-components'
 import { Button, Input, ButtonText } from '../shared';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
@@ -62,6 +62,20 @@ class Login extends React.Component {
                 this.setState({ loading: false });
         })
         .catch(() => this.setState({ loading: false }));
+    }
+
+    componentWillUpdate(nextProps) {
+    
+        if(nextProps.auth.error) {
+            if(this.state.loading) {
+                this.setState({ loading: false })
+            }
+
+            if(this.props.auth.isAuthenticating && !this.state.loading)
+                Alert.alert('Usuário ou senha incorreto.');
+        }
+
+        return true;
     }
 
     handleLogin() {        

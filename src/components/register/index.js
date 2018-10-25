@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableWithoutFeedback, Text, View, ActivityIndicator } from 'react-native';
+import { TouchableWithoutFeedback, Text, View, ActivityIndicator, Alert } from 'react-native';
 import styled from 'styled-components'
 import { Button, Input, ButtonText } from '../shared';
 import { Actions } from 'react-native-router-flux';
@@ -56,6 +56,14 @@ class Register extends React.Component {
             name: this.state.name,
             password: this.state.password
         });
+    }
+
+    componentWillUpdate(nextProps) {
+        if(nextProps.user.error && this.props.user.isRegistering) {
+            Alert.alert(nextProps.user.error);
+        }
+
+        return true;
     }
 
     renderRegisterButtonChildren() {

@@ -28,14 +28,15 @@ class TaskList extends React.Component {
     }
 
     handleNewTask() {
-        this.props.taskActions.addTask({
-            description: this.state.newTaskDescription,
-            uuid: uuid(),
-            isProcessing: true
-        });
-        this.setState({ newTaskDescription: '' })
-        console.log(this._taskInput);
-        this._taskInput.focus();
+        if(this.state.newTaskDescription) {
+            this.props.taskActions.addTask({
+                description: this.state.newTaskDescription,
+                uuid: uuid(),
+                isProcessing: true
+            });
+            this.setState({ newTaskDescription: '' })
+            this._taskInput.focus();
+        }
     }
 
     handleRemoveTask(task) {

@@ -9,7 +9,7 @@ const initialState = {
 export default function(state = initialState, action) {
     switch(action.type) {
         case types.AUTH:
-            return { ...state, isAuthenticating: true}
+            return { ...state, isAuthenticating: true, error: ''}
         case types.AUTH_SUCCESS:
             return { ...state, isAuthenticating: false, success: true }
         case types.AUTH_FAIL:

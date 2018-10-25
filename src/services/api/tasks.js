@@ -1,13 +1,12 @@
-import { API_URL, getConfig } from './index';
+import { API_URL, getConfig, USER } from './index';
 
-export async function fetchTasks() {
+export function fetchTasks() {
 
-    const response = await fetch(
+    return fetch(        
         `${API_URL}/tasks`,
         getConfig()
-    );
-
-    return response.json();
+    ).then(response => response.json())
+    .catch(error => Promise.reject(error));
 }
 
 export async function addTask(task) {

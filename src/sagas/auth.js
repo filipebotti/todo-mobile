@@ -6,6 +6,9 @@ function* doAuth(action) {
   try{
     const data = yield API.auth(action.payload);
     
+    if(data.error)
+      throw data;
+
     API.USER.token = data.access_token;
     API.USER.storeCredentials(action.payload);
 
