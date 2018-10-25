@@ -1,4 +1,4 @@
-import { USER, API_URL, getConfig } from './index';
+import { API_URL, getConfig } from './index';
 
 export async function auth(credentials) {
 
