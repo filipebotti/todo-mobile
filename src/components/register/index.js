@@ -1,9 +1,12 @@
 import React from 'react';
-import { TouchableWithoutFeedback, Text, View } from 'react-native';
+import { TouchableWithoutFeedback, Text, View, ActivityIndicator } from 'react-native';
 import styled from 'styled-components'
-import { Button, Input } from '../shared';
-import FontAwesome, { Icons } from 'react-native-fontawesome';
+import { Button, Input, ButtonText } from '../shared';
 import { Actions } from 'react-native-router-flux';
+
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as registerActions from '../../actions/register';
 
 const Container = styled.View`
     flex: 1;
@@ -39,8 +42,28 @@ class Register extends React.Component {
 
         this.state = {
             name: '',
-            password: ''
+            password: '',
+            username: ''
         }
+
+        this.handleRegister = this.handleRegister.bind(this);
+        this.renderRegisterButtonChildren = this.renderRegisterButtonChildren.bind(this);
+    }
+
+    handleRegister() {
+        this.props.registerActions.signUp({
+            username: this.state.username,
+            name: this.state.name,
+            password: this.state.password
+        });
+    }
+
+    renderRegisterButtonChildren() {
+        console.log(this.props.user);
+        if(!this.props.user.isRegistering)
+            return <ButtonText>Entrar</ButtonText>;
+        else
+            return <ActivityIndicator size="small"/>
     }
 
     render() {
@@ -57,7 +80,7 @@ class Register extends React.Component {
                     />
                     <Input 
                         placeholder={"Nome"}
-                        onChangeText={(username) => this.setState({username})}
+                        onChangeText={(name) => this.setState({name})}
                         value={this.state.name}
                     />
                     <Input 
@@ -66,8 +89,11 @@ class Register extends React.Component {
                         value={this.state.password}
                     />
                     <Button text={"Registrar"}
-                        onPress={Actions.main}
-                    />
+                        onPress={this.handleRegister}
+                        disabled={this.props.user.isRegistering}
+                    >
+                        {this.renderRegisterButtonChildren()}                    
+                    </Button>
                 </FormWrapper>
                 <View style={{flex:0.5}}>
                     <TouchableWithoutFeedback onPress={Actions.pop}>
@@ -81,4 +107,11 @@ class Register extends React.Component {
     }
 }
 
-export default Register;
+export default connect(
+    state => ({
+        user: state.user
+    }),
+    dispatch => ({
+        registerActions: bindActionCreators(registerActions, dispatch)
+    })
+)(Register);

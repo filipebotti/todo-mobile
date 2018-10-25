@@ -52,7 +52,7 @@ class TaskList extends React.Component {
                     textRef={ref => this._taskInput = ref}                      
                 />                    
                 <ScrollView style={{ flex: 1 }}>
-                    {this.props.task.tasks.map((item) => {
+                    {this.props.task.tasks.length > 0 && this.props.task.tasks.map((item) => {
                         return (
                             <Task key={item.uuid} task={item} onCheckTask={() => this.handleRemoveTask(item)}/>
                         )
