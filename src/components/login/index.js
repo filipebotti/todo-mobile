@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableWithoutFeedback, Text, View,ActivityIndicator } from 'react-native';
+import { TouchableWithoutFeedback, Text, View, ActivityIndicator } from 'react-native';
 import styled from 'styled-components'
 import { Button, Input, ButtonText } from '../shared';
 import FontAwesome, { Icons } from 'react-native-fontawesome';
@@ -7,6 +7,7 @@ import { Actions }  from 'react-native-router-flux';
 import * as authActions from '../../actions/auth';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { USER } from '../../services/config';
 
 const Container = styled.View`
     flex: 1;
@@ -42,20 +43,25 @@ class Login extends React.Component {
 
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            loading: true
         }
 
         this.handleLogin = this.handleLogin.bind(this);
         this.renderLoginButtonChildren = this.renderLoginButtonChildren.bind(this);
     }
 
-    shouldComponentUpdate(nextProps) {
-        if(!this.props.auth.success && nextProps.auth.success) {            
-            Actions.main();
-            return false;
-        }            
-        else
-            return true;
+    componentDidMount() {
+        credentials = USER.getStoredCredentials()
+        .then(credentials => {
+            
+            if (credentials) {
+                this.props.authActions.auth(credentials);
+                
+            } else 
+                this.setState({ loading: false });
+        })
+        .catch(() => this.setState({ loading: false }));
     }
 
     handleLogin() {        
@@ -70,39 +76,47 @@ class Login extends React.Component {
     }
 
     render() {
-        return (
-            <Container>
-                <Header>
-                    <FontAwesome style={{fontSize: 26, color: '#320b86'}}>{Icons.checkSquareO}</FontAwesome>
-                    <HeaderTitle>Tasker</HeaderTitle>
-                </Header>
-                <FormWrapper>
-                    <Input 
-                        placeholder={"Usuário"}
-                        onChangeText={(username) => this.setState({username})}
-                        value={this.state.username}
-                    />
-                    <Input 
-                        placeholder={"Senha"}
-                        onChangeText={(password) => this.setState({password})}
-                        value={this.state.password}
-                    />
-                    <Button 
-                        onPress={this.handleLogin}
-                        disabled={this.props.auth.isAuthenticating}
-                    >
-                        {this.renderLoginButtonChildren()}
-                    </Button>
-                </FormWrapper>
-                <View style={{flex:0.5}}>
-                    <TouchableWithoutFeedback onPress={Actions.register}>
-                        <View>
-                            <Text style={{color: '#424242'}}>Cadastre-se</Text>
-                        </View>
-                    </TouchableWithoutFeedback>
-                </View>
-            </Container>
-        )
+
+        if(this.state.loading)
+            return (
+                <Container>
+                    <ActivityIndicator size="large"/>
+                </Container>
+            );
+        else
+            return (
+                <Container>
+                    <Header>
+                        <FontAwesome style={{fontSize: 26, color: '#320b86'}}>{Icons.checkSquareO}</FontAwesome>
+                        <HeaderTitle>Tasker</HeaderTitle>
+                    </Header>
+                    <FormWrapper>
+                        <Input 
+                            placeholder={"Usuário"}
+                            onChangeText={(username) => this.setState({username})}
+                            value={this.state.username}
+                        />
+                        <Input 
+                            placeholder={"Senha"}
+                            onChangeText={(password) => this.setState({password})}
+                            value={this.state.password}
+                        />
+                        <Button 
+                            onPress={this.handleLogin}
+                            disabled={this.props.auth.isAuthenticating}
+                        >
+                            {this.renderLoginButtonChildren()}
+                        </Button>
+                    </FormWrapper>
+                    <View style={{flex:0.5}}>
+                        <TouchableWithoutFeedback onPress={Actions.register}>
+                            <View>
+                                <Text style={{color: '#424242'}}>Cadastre-se</Text>
+                            </View>
+                        </TouchableWithoutFeedback>
+                    </View>
+                </Container>
+            );
     }
 }
 
