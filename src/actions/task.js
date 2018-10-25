@@ -19,3 +19,10 @@ export function removeTask(task) {
         task
     }
 }
+
+export function updateTask(task) {
+    return {
+        type: types.TASK_UPDATE,
+        task
+    }
+}

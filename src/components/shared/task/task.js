@@ -58,12 +58,14 @@ class Task extends React.Component {
 
     render() {
         return (
-            <TaskContainer opacity={this.state.animOpacity}>
-                <TouchableOpacity disabled={this.state.isChecked || this.props.task.isProcessing} onPress={this.onChecked}>
-                    {this.renderCheckIcon()}
-                </TouchableOpacity>
-                <TaskText isProcessing={this.props.task.isProcessing}>{this.props.task.description}</TaskText>           
-            </TaskContainer>
+            <TouchableOpacity onPress={this.props.onPress}>
+                <TaskContainer opacity={this.state.animOpacity}>
+                    <TouchableOpacity disabled={this.state.isChecked || this.props.task.isProcessing} onPress={this.onChecked}>
+                        {this.renderCheckIcon()}
+                    </TouchableOpacity>
+                    <TaskText isProcessing={this.props.task.isProcessing}>{this.props.task.description}</TaskText>           
+                </TaskContainer>
+            </TouchableOpacity>
         )
     }
 }

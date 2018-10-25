@@ -28,3 +28,12 @@ export async function removeTask(task) {
 
     return response;
 }
+
+export async function updateTask(task) {
+    const response = await fetch(
+        `${API_URL}/tasks/${task.id}`,
+        getConfig('PUT', task)
+    )
+
+    return response.json();
+}

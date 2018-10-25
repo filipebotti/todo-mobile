@@ -14,6 +14,7 @@ import { Router, Stack, Scene } from 'react-native-router-flux';
 import Login from './components/login';
 import Register from './components/register';
 import Main from './components/main';
+import TaskDetail from './components/task-detail';
 
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
@@ -34,6 +35,7 @@ export default class App extends React.Component {
               <Scene key="login" component={Login} initial={true}/> 
               <Scene key="register" component={Register} />
               <Scene key="main" component={Main} />
+              <Scene key="taskDetail" component={TaskDetail} />
             </Stack>
           </Router>
         </View>

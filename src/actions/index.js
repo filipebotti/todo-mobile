@@ -21,3 +21,7 @@ export const TASK_ADD_FAIL = "vice/task/TASK_ADD_FAIL";
 export const TASK_REMOVE = "vice/task/TASK_REMOVE";
 export const TASK_REMOVE_SUCCESS = "vice/task/TASK_REMOVE_SUCCESS";
 export const TASK_REMOVE_FAIL = "vice/task/TASK_REMOVE_FAIL";
+
+export const TASK_UPDATE = "vice/task/TASK_UPDATE";
+export const TASK_UPDATE_SUCCESS = "vice/task/TASK_UPDATE_SUCCESS";
+export const TASK_UPDATE_FAIL = "vice/task/TASK_UPDATE_FAIL";

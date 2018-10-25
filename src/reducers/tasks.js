@@ -24,6 +24,12 @@ export default function(state = initialState, action) {
         case types.TASK_REMOVE:
             tasks = state.tasks.filter(item => item.uuid != action.task.uuid)
             return { ...state, tasks }
+        case types.TASK_UPDATE:
+            return {...state, isFetching: true, error: ''}
+        case types.TASK_UPDATE_SUCCESS:            
+            return { ...state, isFetching: false }
+        case types.TASK_UPDATE_FAIL:
+            return { ...state, isFetching: false, error: action.error }
         default:
             return state;
     }

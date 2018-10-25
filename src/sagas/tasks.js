@@ -44,9 +44,19 @@ function* removeTask(action) {
     }
 }
 
+function* updateTask(action) {
+    try {
+        const task = yield API.updateTask(action.task);
+        yield put({ type: types.TASK_UPDATE_SUCCESS, task });
+    } catch(ex) {
+        yield put({type: types.TASK_UPDATE_FAIL, error: ex });
+    }
+}
+
 export default function* () {
     yield takeEvery(types.INITIAL_FETCH, fetchTasksAuth);
     yield takeEvery(types.TASKS_FETCH, fetchTasks);
     yield takeEvery(types.TASK_ADD, addTask);
     yield takeEvery(types.TASK_REMOVE, removeTask);
+    yield takeEvery(types.TASK_UPDATE, updateTask);
 }

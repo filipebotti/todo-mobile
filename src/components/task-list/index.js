@@ -7,6 +7,7 @@ import uuid from 'uuid/v4';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as taskActions from '../../actions/task';
+import { Actions } from 'react-native-router-flux';
 
 const Container = styled.View`
     flex: 1;
@@ -33,11 +34,11 @@ class TaskList extends React.Component {
 
     componentDidMount() {
         AppState.addEventListener('change', this.handleAppState);
-      }
+    }
     
-      componentWillUnmount() {
+    componentWillUnmount() {
         AppState.removeEventListener('change', this.handleAppState);
-      }
+    }
 
     handleAppState(nextAppState) {
         if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
@@ -86,7 +87,12 @@ class TaskList extends React.Component {
                 >
                     {this.props.task.tasks.length > 0 && this.props.task.tasks.map((item) => {
                         return (
-                            <Task key={item.uuid} task={item} onCheckTask={() => this.handleRemoveTask(item)}/>
+                            <Task 
+                                key={item.uuid} 
+                                task={item} 
+                                onCheckTask={() => this.handleRemoveTask(item)}
+                                onPress={() => Actions.taskDetail({ item })}
+                            />
                         )
                     })}
                 </ScrollView>
