@@ -7,6 +7,9 @@ const initialState = {
 }
 
 export default function(state = initialState, action) {
+
+    let tasks = [];
+
     switch(action.type) {
         case types.TASKS_FETCH:
             return { ...state, isFetching: true };
@@ -15,7 +18,7 @@ export default function(state = initialState, action) {
         case types.TASKS_FETCH_FAIL:
             return { tasks: [], isFetching: false, error: action.error };
         case types.TASK_ADD:
-            newTasks = [ ...state.tasks, action.task ];
+            const newTasks = [ ...state.tasks, action.task ];
             return { ...state, tasks: newTasks }
         case types.TASK_ADD_SUCCESS:
             tasks = state.tasks.filter(item => item.uuid != action.task.uuid);

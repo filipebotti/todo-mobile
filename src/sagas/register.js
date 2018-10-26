@@ -4,8 +4,9 @@ import API from '../services/api';
 
 function* signUp(action) {
     try {
+        console.log(action.payload);
         const data = yield API.signUp(action.payload);
-        
+        console.log(data);
         if(!data.access_token) {
             if(data.name) 
                 throw "Nome não pode ficar em branco" 

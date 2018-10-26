@@ -114,6 +114,7 @@ class Login extends React.Component {
                             placeholder={"Senha"}
                             onChangeText={(password) => this.setState({password})}
                             value={this.state.password}
+                            secureTextEntry={true}
                         />
                         <Button 
                             onPress={this.handleLogin}

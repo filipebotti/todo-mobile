@@ -14,13 +14,14 @@ const StyledInput = styled.TextInput`
     color: ${Colors.DARK_GREY};
 `;
 
-const Input = ({value, onChangeText, placeholder, style }) => {
+const Input = ({value, onChangeText, placeholder, style, secureTextEntry }) => {
     return (
         <StyledInput 
             value={value}
             onChangeText={onChangeText}
             placeholder={placeholder}
             style={style}
+            secureTextEntry={secureTextEntry}
         />
     )
 };
